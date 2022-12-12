@@ -1,0 +1,94 @@
+\section{Data}
+		\subsection{Data Mining}
+			Data was scraped from Official NHL statistics API using Python libraries requests and grequests which allow asynchronous HTTP requests. 
+			Since this is no trivial dataset with relations between game, teams, players and player stats storing it in CSV or other plain file format would be overkill. For that purpose SQL schema for SQlite database was created.
+			
+		\subsection{Data storage}
+			Fetched data was stored into SQL database in raw format without any transformations just like returned by statistics API. For that purpose SQL schema was designed to fit data:
+			
+			\begin{figure}[H]
+				\includegraphics[width=\textwidth]{dbschema}
+			\end{figure}
+		
+		\subsection{Data fetch from database}
+			Thanks to storing data in database features was easy to shape and obtain with single SQL query:
+\begin{minted}[xleftmargin=\parindent,linenos,breaklines]{sql}
+SELECT person.id,person.positionCode,person.weight,person.height,person.shootsCatches,
+skaterStats.timeOnIce,skaterStats.assists,skaterStats.goals,skaterStats.shots,
+skaterStats.hits,skaterStats.powerPlayGoals,skaterStats.powerPlayAssists,
+skaterStats.penaltyMinutes,skaterStats.faceOffWins,skaterStats.faceoffTaken,
+skaterStats.takeaways,skaterStats.giveaways,skaterStats.shortHandedGoals,
+skaterStats.shortHandedAssists,skaterStats.blocked,skaterStats.plusMinus,
+skaterStats.evenTimeOnIce,skaterStats.powerPlayTimeOnIce,
+skaterStats.shortHandedTimeOnIce FROM person,skaterStats WHERE person.positionCode != 'G' AND person.id = skaterStats.playerId
+\end{minted}
+			This SQL query performs join of players personal data like weight, height etc with players game statistics.
+		
+		\subsection{Data cleansing and transformation}
+			Variables were classified into continuous variables and binary variables. This process is necessary to normalize \
+			variables and convert binary variables to 0's or 1's there is only one binary variable person.shootsCatches which is information about dominant hand.
+			
+			Although four variables needed to be transformed shootsCatches and time statistics which were obtained as text and needed to be converted integer value. The example of time conversion from string to integer is presented below:
+			
+\begin{minted}[xleftmargin=\parindent,linenos,breaklines]{python}
+nhl['timeOnIce'] = nhl['timeOnIce'].str.split('.').str[0]
+nhl['timeOnIce'] = nhl['timeOnIce'].str.split(':').apply(lambda x: int(x[0]) * 60 + int(x[1]))
+\end{minted}
+			
+			shootsCatches representing a dominant hand was converted using python pandas python library function factorize which transformed this variable to {0,1}:
+			
+\begin{minted}[xleftmargin=\parindent,linenos,breaklines]{python}
+nhl.shootsCatches = pd.Categorical(pd.factorize(nhl.shootsCatches)[0])
+\end{minted}
+			
+	\subsection{Data normalization}
+	Data was normalized prior to using Linear Support Vector Classification, by using standard scaler which scales data to range of [0,1]. This is important because SVC tries to maximize the distance between the separating plane and the support vectors. If one feature (i.e. one dimension in this space) has very large values, it will dominate the other features when calculating the distance. If data is rescaled all features have the same influence on the distance metric. This was done by making a pipeline with standard scaler and SVC classifier. 
+	
+	 \begin{figure}[H]
+        \includegraphics[width=\textwidth]{pipeline}
+    \end{figure}
+			
+	\subsection{Testing data}
+	Variance Threshold is a feature selector that removes all the low variance features from the dataset that are of no great use in modeling. It looks only at the features, not the desired outputs, and can thus be used for unsupervised learning. In other words it's used to find constant/quasi-constant predictors.
+	
+\begin{minted}[xleftmargin=\parindent,linenos,breaklines]{python}
+from sklearn.feature_selection import VarianceThreshold
+selector = VarianceThreshold()
+selector.fit_transform(kb_features)
+selector.get_feature_names_out()
+
+array(['id', 'weight', 'height', 'shootsCatches', 'timeOnIce', 'assists',
+       'goals', 'shots', 'hits', 'powerPlayGoals', 'powerPlayAssists',
+       'penaltyMinutes', 'faceOffWins', 'faceoffTaken', 'takeaways',
+       'giveaways', 'shortHandedGoals', 'shortHandedAssists', 'blocked',
+       'plusMinus', 'evenTimeOnIce', 'powerPlayTimeOnIce',
+       'shortHandedTimeOnIce'], dtype=object)
+\end{minted}
+	From the output of Variance Threshold it can be seen that there is no static or quasi-static predictors and all of the data is equally important.
+	
+	\subsection{Data split}
+	Before attempting to use SVC data was splitted into train and test sets. With 75\% of data being set as train data and 25\% as test data.
+\begin{minted}[xleftmargin=\parindent,linenos,breaklines]{python}
+X_train, X_test, Y_train, Y_test = train_test_split(features, targets, test_size=0.25,random_state=0,shuffle=True)
+\end{minted}
+	
+	\section{Method}
+	After preparing the data linear SVC was used on training set to prepare fit coefficients that would be then used on test set.
+\begin{minted}[xleftmargin=\parindent,linenos,breaklines]{python}
+import warnings
+warnings.filterwarnings("ignore")
+from sklearn.model_selection import cross_val_score
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.svm import LinearSVC
+from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler
+
+pipe = Pipeline([('scaler', StandardScaler()), ('svc', LinearSVC())])
+pipe.fit(X_train, Y_train)
+print("Accuracy {:.2f}%".format(pipe.score(X_test, Y_test)*100))
+\end{minted}
+
+Which gave the accuracy of 73.52\%
+\chapter{Results and Discussion}
+	\input{rp_results_n_discussion} 

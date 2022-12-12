@@ -1,0 +1,46 @@
+\section{Getting started}
+        \subsubsection{Brief}
+            Players positions and thus so called line combinations are so important for team to achieve victory that
+            teams have different line combinations of players for different games modes such as Power Play or killing a penalty. 
+            The usage of statistics in the NHL has been very rare until recently when Official NHL statistics API and 
+            statistics became available. Statistics development in NHL game is hard because players and puck are always in the move.
+            In ice hockey games, there usually four forward lines and one defense, players usually play with linemates throughout a game. 
+            The statistics of players at the same line are often highly correlated.
+            
+		\subsection{Method}
+			Support Vector Machine or SVM is one of the most popular supervised learning algorithms, which is used for classification and regression problems. The goal of the SVM algorithm is to create the best line or decision boundary that can segregate n-dimensional space into classes so that we can easily put the new data point in the correct category in the future. This best decision boundary is called a hyperplane. SVM chooses the extreme points/vectors that help in creating the hyperplane. These extreme cases are called as support vectors, and hence algorithm is termed as Support Vector Machine. 
+
+		\subsection{Data Resource}
+			Data comes from Official NHL statistics API from season 2010 until now. From multiple statistics available following were chosen:\\
+			\begin{minipage}[t]{0.45\textwidth}
+        \begin{itemize}
+            \item person.id
+            \item person.positionCode
+            \item person.weight,
+            \item person.height,
+            \item person.shootsCatches,
+            \item skaterStats.timeOnIce,
+            \item skaterStats.assists,
+            \item skaterStats.goals,
+            \item skaterStats.shots,
+            \item skaterStats.hits,
+            \item skaterStats.powerPlayGoals
+            \item skaterStats.powerPlayAssists,
+        \end{itemize}
+    \end{minipage}
+    \begin{minipage}[t]{0.45\textwidth}
+        \begin{itemize}
+            \item skaterStats.penaltyMinutes,
+            \item skaterStats.faceOffWins,
+            \item skaterStats.faceoffTaken,
+            \item skaterStats.takeaways,
+            \item skaterStats.giveaways,
+            \item skaterStats.shortHandedGoals,
+            \item skaterStats.shortHandedAssists,
+            \item skaterStats.blocked,
+            \item skaterStats.plusMinus,
+            \item skaterStats.evenTimeOnIce,
+            \item skaterStats.powerPlayTimeOnIce,
+            \item skaterStats.shortHandedTimeOnIce
+        \end{itemize}
+    \end{minipage} 

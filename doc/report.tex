@@ -1,0 +1,59 @@
+\documentclass{report}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{enumitem}
+
+\usepackage{minted}
+\large
+\title{Data Mining}
+\begin{document}
+\begin{titlepage}
+	\begin{center}
+    \line(1,0){300}\\
+    [0.65cm]
+	\huge{\bfseries Data Mining}\\
+	\line(1,0){300}\\
+	\textsc{\Large Fall 2022, Group Project}\\
+	\textsc{\\\small A\\B\\C\\}     
+	\end{center}
+	%\begin{flushright}
+	%	\textsc{Date: 12-08-2022}\\
+	%\end{flushright}
+\end{titlepage}
+
+\begin{abstract}
+\par Player position in ice hockey is very important for defense and attack. Unlike in other team games in 
+ice hockey players usually play in two lines attack with three players and defense with two. Recently, the NHL has 
+published new data about each game. As new statistical analysis tools such as scalable vector
+machines become available, it becomes possible to analyze player positions more holistically by using a wide
+range of statistical methods. The aims of this study were to predict players positions by looking at 
+the statistics of an individual player.
+\end{abstract}
+
+\tableofcontents
+
+\chapter{Introduction}
+    \input{rp_introduction}
+
+\chapter{Data and Methods}
+	\input{rp_data_n_methods}
+	
+\chapter{Conclusion and References}
+	\section{Conclusion}
+		\begin{itemize}
+			\item Sophisticated model would help NHL teams to figure out which players they should acquire and sell to keep necessary backup for line positions,
+			\item NHL teams could use this model to figure out which players should play on which position to unleash their true potential based on statistics,
+			\item According to Variance Treshold all of the columns are important for position classification,
+			\item Defence position classification is almost certainly true,
+		\end{itemize}
+	\section{References}
+		\begin{itemize}
+			\item Matsuzawa, Takehiro. 2017. Using Machine Learning to Predict Future Points in the NHL
+			\item Matt Eland, Predicting Hockey Penalties with Azure Machine Learning
+		\end{itemize}
+\end{document}
+ 
