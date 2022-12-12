@@ -1,0 +1,75 @@
+\documentclass[9pt]{beamer}
+\mode<presentation>
+
+% Theme choice:
+\usetheme{Madrid}%Darmstadt 
+
+\usecolortheme[RGB={0,100,50}]{structure}
+ \usefonttheme{structurebold} 
+\setbeamercovered{invisible}
+%\setbeamertemplate{navigation symbols}{}
+\usepackage{dynblocks}
+\usepackage{textpos}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{dutchcal}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% Title page details: 
+\title[Beamer Name]{Data Mining} %add title
+
+%CHANGE THIS
+\author[A,B,C]{ \textbf{\Large A\\ B\\ C}} %Add author
+\institute[SEMO]{\large UNIVERSITY} 
+
+
+
+
+
+%\titlegraphic{\includegraphics[width=5cm]{Logo1.eps}}
+\date{}
+
+% Logo only on title page
+%\logo{\includegraphics[width=1cm,keepaspectratio]{Logo.png}}
+\usepackage[pscoord]{eso-pic}
+
+
+\begin{document}
+
+% Title page frame
+%\begin{frame}
+    %\titlepage 
+%\end{frame}
+\frame[plain]{\titlepage}
+%logo
+%\AddToShipoutPictureFG{
+%    \put(\LenToUnit{.92\paperwidth},
+%    \LenToUnit{.185\paperheight})
+%    {\vtop{{\null}
+%    \makebox{\includegraphics[width=.8cm,keepaspectratio]{public/blockchain.png}}}}}
+
+
+\begin{frame}{Outline}
+  \tableofcontents
+\end{frame}
+
+\section{Abstract}
+    \input{ps_abstract}
+\section{Introduction}
+    \input{ps_introduction}
+\section{Related Work}
+    \input{ps_related_work}
+\section{Materials and Methods}
+    \input{ps_materials_n_methods}
+\section{Results and Discussion}
+    \input{ps_results_n_discussion}
+\section{Conclusions}
+    \input{ps_conclusions}
+\section{References}
+    \input{ps_references}
+
+\end{document}
