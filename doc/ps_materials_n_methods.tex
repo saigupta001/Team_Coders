@@ -1,5 +1,5 @@
 \begin{frame}{Materials and Methods}
-    \textbf{Mining data from NHL stats API}
+    \textbf{Mining data from NHL stats API}\\
     \vspace{2em}
     Since API is accessible through Web API for optimization purposes and for easy shaping data set it must be downloaded. For this purpose two python libraries were chosen:
     
@@ -17,7 +17,7 @@
 \end{frame}
 
 \begin{frame}{Materials and Methods}
-    \textbf{Storing data set}
+    \textbf{Storing data set}\\
     \vspace{2em}
     Since this is no trivial dataset with relations between game, teams, players and player stats storing it in CSV or other plain file format would be overkill. That's why SQL format was chosen, which allows:
     
@@ -29,7 +29,7 @@
 \end{frame}
 
 \begin{frame}{Materials and Methods}
-    \textbf{Storing data set}
+    \textbf{Storing data set}\\
     \vspace{2em}
    
     To be type agnostic another python framework was chosen to design and model database in easy to migrate manner. SQLAlchemy allows for shaping SQL database using python classes. Following schema was proposed:
